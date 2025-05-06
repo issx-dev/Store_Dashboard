@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <header>
+        <h1>Bienvenido al Dashboard de {{tienda}}</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Inicio</a></li>
+            <li><a href="{{ url_for('orders') }}">Pedidos</a></li>
+            <li><a href="{{ url_for('clients') }}">Clientes</a></li>
+            <li><a href="{{ url_for('products') }}">Catálogo</a></li>
+            <li><a href="{{ url_for('add_product') }}">Agregar Producto</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="container">
+            <p><strong>Administrador:</strong> {{admin}}, <strong>Fecha de inicio de sesión:</strong> {{fecha}}</p>
+            <p class="lead">Administra y visualiza tus productos de manera eficiente.</p>
+            <br>
+            <a href="{{ url_for('products') }}" class="btn btn-primary">Catálogo</a>
+            <a href="{{ url_for('add_product') }}" class="btn btn-success">Agregar Producto</a>
+        </div>
+    </main>
+</body>
+
+</html>

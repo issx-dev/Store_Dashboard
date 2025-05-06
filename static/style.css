@@ -1,0 +1,233 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #a4a5a7;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #ffffff62;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+form.product-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+fieldset {
+    border: 2px solid #002e6e;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    background-color: #5383c525;
+}
+
+legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0044ff;
+    padding: 0 10px;
+    text-align: center;
+}
+
+
+.form-group,
+.cat {
+    position: relative;
+    margin-bottom: 1.8rem;
+}
+
+.form-group input,
+.form-group textarea,
+.cat select {
+    width: 100%;
+    padding: 14px 12px 14px 12px;
+    font-size: 1rem;
+    border: 1px solid #0034df;
+    border-radius: 6px;
+    background: transparent;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-group label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    color: #ffffff;
+    padding: 0 4px;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: 0.2s ease all;
+}
+
+/* Efecto de flotación */
+.form-group input:focus+label,
+.form-group input:not(:placeholder-shown)+label,
+.form-group textarea:focus+label,
+.form-group textarea:not(:placeholder-shown)+label {
+    top: -20px;
+    left: 10px;
+    font-size: 0.9rem;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+}
+
+.cat select {
+    padding: 14px 12px;
+    color: #ffffff;
+}
+
+.cat option {
+    color: black;
+    background-color: transparent;
+}
+
+input:not(:placeholder-shown),
+textarea:not(:placeholder-shown) {
+    color: inherit;
+}
+
+/* Botón */
+.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.add_product_btn {
+    text-align: center;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.content-container {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #999999;
+    border-radius: 5px;
+    padding: 1rem;
+    gap: 10px;
+    margin: 1rem;
+}
+
+.content-card {
+    flex: 1 ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 4px 6px rgb(82, 82, 82);
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 40%;
+}
+
+.content-card img {
+    width: 150px;
+}
+.content-header{
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+/* Estilos para los navs */
+nav {
+    margin: 1rem;
+    background-color: #0044ff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li a {
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ffcc00;
+}
+
+.active,
+.inactive {
+    font-weight: bold;
+}
+
+.active {
+    color: green;
+}
+
+.inactive {
+    color: red;
+}
+
+.clients{
+    text-align: left;
+}
+
+.clients img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.clients .content-card:first-child {
+    background-color: #d1d09e;
+    min-width: calc(100% - 20px);
+    font-size: 1.1rem;
+}
+
+.clients .content-card:first-child h2{
+    min-width: 30%;
+}
+
+.orders{
+    text-align: left;
+}
