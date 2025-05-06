@@ -66,7 +66,7 @@ Store_Dashboard/
      ```bash
      venv\Scripts\activate
      ```
-   - On macOS/Linux:
+   - On Linux:
      ```bash
      source venv/bin/activate
      ```
@@ -79,16 +79,23 @@ Store_Dashboard/
 ## 🖥️ Usage
 
 1. Run the application:
+   
+   Windows
    ```bash
    python app.py
    ```
+   Linux
+   ```bash
+   python3 app.py
+   ```
+   
 
-2. Open your web browser and navigate to:
+3. Open your web browser and navigate to:
    ```
    http://127.0.0.1:5000/
    ```
 
-3. Navigate through the dashboard:
+4. Navigate through the dashboard:
    - Home page: `/` - Overview of the store
    - Products: `/products` - View all products
    - Add Product: `/add_product` - Add a new product
@@ -107,9 +114,3 @@ The application currently uses in-memory fake data. For a production environment
 1. Implementing a database connection (SQLite, PostgreSQL, etc.)
 2. Adding user authentication
 3. Implementing CRUD operations for all entities
-4. Adding form validation for all inputs
-5. Enhancing the frontend with more interactive elements
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
