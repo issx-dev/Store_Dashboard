@@ -5,7 +5,7 @@ from fake_data import (
     categories,
     fake_products_db,
     fake_clients_db,
-    fake_orders_db
+    fake_orders_db,
 )
 
 app = Flask(__name__)
@@ -20,15 +20,23 @@ def home():
 def products():
     return render_template("products.html", products=fake_products_db)
 
+
 @app.route("/clients")
 def clients():
     max_orders_client = max(fake_clients_db, key=lambda x: x.num_orders)
     fake_clients_db.sort(key=lambda x: x.num_orders, reverse=True)
-    return render_template("clients.html", clients=fake_clients_db, top_client=max_orders_client)
+    return render_template(
+        "clients.html", clients=fake_clients_db, top_client=max_orders_client
+    )
+
 
 @app.route("/orders")
 def orders():
-    return render_template("orders.html", orders=fake_orders_db)
+    return render_template(
+        "orders.html",
+        orders=fake_orders_db,
+        total_earnings=sum(order["Total"] for order in fake_orders_db),
+    )
 
 
 @app.route("/add_product", methods=["GET", "POST"])

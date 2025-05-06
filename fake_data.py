@@ -69,29 +69,38 @@ fake_clients_db = [
 ]
 
 fake_orders_db = [
-    Order(
-        "1",
-        fake_clients_db[0],
-        [
-            fake_products_db[0],
-            fake_products_db[1],
-            fake_products_db[2],
-        ],
-    ),
-    Order(
-        "2",
-        fake_clients_db[1],
-        [
-            fake_products_db[3],
-        ],
-    ),
-    Order(
-        "3",
-        fake_clients_db[0],
-        [
-            fake_products_db[3],
-            fake_products_db[2],
-            fake_products_db[1],
-        ],
-    ),
+    {
+        "Order": Order(
+            "1",
+            fake_clients_db[0],
+            [
+                fake_products_db[0],
+                fake_products_db[1],
+                fake_products_db[2],
+            ],
+        ),
+        "Total": sum([product.price for product in fake_products_db[0:3]]),
+    },
+    {
+        "Order": Order(
+            "2",
+            fake_clients_db[1],
+            [
+                fake_products_db[3],
+            ],
+        ),
+        "Total": fake_products_db[3].price,
+    },
+    {
+        "Order": Order(
+            "3",
+            fake_clients_db[0],
+            [
+                fake_products_db[3],
+                fake_products_db[2],
+                fake_products_db[1],
+            ],
+        ),
+        "Total": sum(product.price for product in fake_products_db[1:4]),
+    },
 ]

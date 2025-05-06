@@ -22,18 +22,48 @@
         </ul>
     </nav>
     <main>
-        <div class="content-container">
+        <div class="content-container total_earnings">
+            <div class="content-card">
+                <div class="content-header orders">
+                    <h2>Total Generado: {{total_earnings}}€</h2>
+                </div>
+            </div>
             {% for ord in orders %}
             <div class="content-card">
                 <div class="content-header orders">
-                    <p>ID de pedido: <strong>{{ ord.id }}</strong></p>
-                    <p>Cliente: <strong>{{ ord.client }}</strong></p>
-                    <p>Productos: 
-                        {% for prod in ord.products %}
-                        <strong>{{ prod }}</strong>
-                        <br><br>
-                        {% endfor %}
-                    </p>
+                    <ul>
+                        <li>
+                            <strong>ID Pedido: </strong>{{ ord["Order"].id }}
+                        </li>
+                        <br>
+                        <li>
+                            <strong> ID Cliente: </strong> {{ ord["Order"].client.id }}
+                            <ul>
+                                <li><strong>Nombre: </strong> {{ord["Order"].client.name}}</li>
+                                <li><strong>Email: </strong> {{ord["Order"].client.email}}</li>
+                            </ul>
+                        </li>
+                        <br>
+                        <li>
+                            <strong>Productos:</strong>
+                            <br><br>
+                            <ol>
+                                {% for prod in ord["Order"].products %}
+                                <li>
+                                    <strong> ID Producto: </strong> {{ prod.id }}
+                                    <ul>
+                                        <li><strong>Nombre: </strong> {{prod.name}}</li>
+                                        <li><strong>Precio: </strong> {{prod.price}}€</li>
+                                    </ul>
+                                    <br>
+                                </li>
+                                {% endfor %}
+                            </ol>
+                        </li>
+                        <li>
+                            <strong>Precio Total: </strong> {{ ord["Total"] }}€
+                        </li>
+                    </ul>
                 </div>
             </div>
             {% endfor %}
