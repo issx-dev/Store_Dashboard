@@ -29,37 +29,39 @@
                 </div>
             </div>
             {% for ord in orders %}
-            <div class="content-card">
+            <div class="content-card orders_card">
                 <div class="content-header orders">
-                    <ul>
-                        <li>
-                            <strong>ID Pedido: </strong>{{ ord["Order"].id }}
-                        </li>
-                        <br>
-                        <li>
-                            <strong> ID Cliente: </strong> {{ ord["Order"].client.id }}
+                        <summary>
+                            <h4><strong>ID Pedido: </strong>{{ ord["Order"].id }}</h4>
+                        </summary>
+                        <details>
                             <ul>
-                                <li><strong>Nombre: </strong> {{ord["Order"].client.name}}</li>
-                                <li><strong>Email: </strong> {{ord["Order"].client.email}}</li>
-                            </ul>
-                        </li>
-                        <br>
-                        <li>
-                            <strong>Productos:</strong>
-                            <br><br>
-                            <ol>
-                                {% for prod in ord["Order"].products %}
                                 <li>
-                                    <strong> ID Producto: </strong> {{ prod.id }}
+                                    <strong> ID Cliente: </strong> {{ ord["Order"].client.id }}
                                     <ul>
-                                        <li><strong>Nombre: </strong> {{prod.name}}</li>
-                                        <li><strong>Precio: </strong> {{prod.price}}€</li>
+                                        <li><strong>Nombre: </strong> {{ord["Order"].client.name}}</li>
+                                        <li><strong>Email: </strong> {{ord["Order"].client.email}}</li>
                                     </ul>
-                                    <br>
+                                    <li>
+                                        <strong>Productos:</strong>
+                                        <br><br>
+                                        <ol>
+                                            {% for prod in ord["Order"].products %}
+                                            <li>
+                                                <strong> ID Producto: </strong> {{ prod.id }}
+                                                <ul>
+                                                    <li><strong>Nombre: </strong> {{prod.name}}</li>
+                                                    <li><strong>Precio: </strong> {{prod.price}}€</li>
+                                                </ul>
+                                                <br>
+                                            </li>
+                                            {% endfor %}
+                                        </ol>
+                                    </li>
                                 </li>
-                                {% endfor %}
-                            </ol>
-                        </li>
+                            </ul>
+                        </details>
+                        <br>
                         <li>
                             <strong>Precio Total: </strong> {{ ord["Total"] }}€
                         </li>

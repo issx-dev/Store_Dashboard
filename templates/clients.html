@@ -26,7 +26,9 @@
             {% for cli in clients %}
             <div class="content-card">
                 {% if cli.id == top_client.id %}
-                <h2> 🌟 CLIENTE ESTRELLA 🌟</h2>
+                <div>
+                    <h2 class="best_client"> 🌟 CLIENTE ESTRELLA 🌟</h2>
+                </div>
                 {% endif %}
                 <div class="content-header">
                     <h3>{{ cli.name }}</h3>
@@ -40,7 +42,7 @@
                         {% endif %}
                     <p>Nº de pedidos: <strong>{{ cli.num_orders}}</strong></p>
                 </div>
-                <img src="{{ cli.profile_pic }}" alt="Foto de perfil de {{ cli.profile_pic }}">
+                <img class="client_img" src="{{ cli.profile_pic }}" alt="Foto de perfil de {{ cli.profile_pic }}">
             </div>
             {% endfor %}
         </div>

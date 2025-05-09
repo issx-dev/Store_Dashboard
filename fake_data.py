@@ -19,6 +19,7 @@ categories = [
     "Monitores",
     "Otros",
 ]
+categories.sort()
 
 fake_products_db = [
     Product(

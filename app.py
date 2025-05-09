@@ -1,4 +1,4 @@
-from flask import Flask,  Response, render_template, request, redirect
+from flask import Flask, Response, render_template, request, redirect
 from models.Product import Product
 from fake_data import (
     admin_data,
@@ -60,7 +60,7 @@ def add_product():
                 f"Error al crear el producto: {e}. Asegúrate de que los valores sean correctos.",
                 status=400,
             )
-            
+
         return redirect("/add_product")
 
     return render_template(
