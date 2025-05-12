@@ -74,7 +74,7 @@ class Product:
 class ProductDB(Product):
     def __init__(
         self,
-        id: str,
+        _id: str,
         name: str,
         price: int | float,
         stock: int,
@@ -83,7 +83,7 @@ class ProductDB(Product):
     ):
         super().__init__(name, price, stock, category, img_url)
 
-        self.__id = id
+        self.__id = _id
 
     @property
     def id(self):

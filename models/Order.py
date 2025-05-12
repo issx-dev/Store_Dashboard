@@ -45,10 +45,10 @@ class Order(Product, Client):
 
 class OrderDB(Order):
     def __init__(
-        self, id: str, client: Client, products: list[Product], date: str = today_date
+        self, _id: str, client: Client, products: list[Product], date: str = today_date
     ):
         super().__init__(client, products, date)
-        self.__id = id
+        self.__id = _id
 
     @property
     def id(self):
