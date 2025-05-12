@@ -1,42 +1,22 @@
-from flask import Flask, Response, render_template, request, redirect
-from models.Product import Product
-from pymongo import MongoClient
-from decouple import config
-from models.Client import ClientDB
+# MODELS
 from models.Product import Product, ProductDB
-from models.Order import OrderDB
 
-from fake_data import admin_data, fake_orders_db
+# LIBRARIES
+from flask import Flask, Response, render_template, request, redirect
+from pymongo import MongoClient
 
-
-# ENV VARIABLES
-MONGO_CONECTION_URL = config("MONGO_CONECTION_URL", cast=str)
-DATABASE_NAME = config("DATABASE_NAME", cast=str)
+# MODULES
+from fake_data import admin_data
+from config import MONGO_CONECTION_URL, DATABASE_NAME, get_db_data
 
 # MAIN APP
 app = Flask(__name__)
 
 # MongoDB conection
-mongo_conection = MongoClient(MONGO_CONECTION_URL).PyMongoDB
-# Database tables managers
+mongo_conection = MongoClient(MONGO_CONECTION_URL)[DATABASE_NAME]
 products_db = mongo_conection.Products
-orders_db = mongo_conection.Orders
 
-mongo_conection.Orders.insert_many([ord._to_json() for ord in fake_orders_db])
-
-# Database tables all data
-products_data = [ProductDB(*prod.values()) for prod in products_db.find({})]
-users_data = [ClientDB(*usr.values()) for usr in mongo_conection.Users.find({})]
-orders_data = [
-    OrderDB(
-        ord["_id"], ClientDB(*ord["client"]), [Product(*prod) for prod in ord["products"]]
-    )
-    for ord in mongo_conection.Orders.find({})
-]
-categories_table = mongo_conection.Categories.find_one({})
-categories_data = (
-    categories_table["Categories"] if isinstance(categories_table, dict) else "Otros"
-)
+products_data, users_data, categories_data, orders_data = get_db_data(mongo_conection)
 
 
 @app.route("/")
@@ -46,6 +26,7 @@ def home():
 
 @app.route("/products")
 def products():
+    products_data = [ProductDB(*prod.values()) for prod in products_db.find({})]
     return render_template("products.html", products=products_data)
 
 
@@ -64,7 +45,7 @@ def orders():
     return render_template(
         "orders.html",
         orders=orders_data,
-        total_earnings=sum(order["Total"] for order in orders_data),
+        total_earnings=sum(order.total_price for order in orders_data),
     )
 
 
@@ -79,7 +60,7 @@ def add_product():
                 request.form["category"],
                 request.form["img_url"],
             )
-            products_db.insert_one(new_prod)
+            products_db.insert_one(new_prod._to_json())
 
         except ValueError as e:
             return Response(
