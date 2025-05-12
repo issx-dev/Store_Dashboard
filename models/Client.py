@@ -7,11 +7,10 @@ class Client:
         num_orders=0,
         profile_pic="https://goo.su/fn18CXL",
     ):
-        self.__id = id
         self.__name = name
         self.__email = email
         self.__active = active
-        self.__num_orders = num_orders
+        self.__num_orders = int(num_orders)
         self.__profile_pic = profile_pic
 
     @property
@@ -70,7 +69,7 @@ class Client:
 class ClientDB(Client):
     def __init__(
         self,
-        id,
+        _id,
         name,
         email,
         active=True,
@@ -78,7 +77,7 @@ class ClientDB(Client):
         profile_pic="https://goo.su/fn18CXL",
     ):
         super().__init__(name, email, active, num_orders, profile_pic)
-        self.__id = id
+        self.__id = _id
 
     @property
     def id(self):
