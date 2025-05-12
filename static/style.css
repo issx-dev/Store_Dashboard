@@ -157,6 +157,7 @@ a {
     background-color: #fff;
     border-radius: 5px;
     padding: 10px;
+    flex-wrap: wrap;
 }
 
 .content-card img {
