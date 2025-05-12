@@ -1,12 +1,11 @@
 class Client:
     def __init__(
         self,
-        id,
         name,
         email,
         active=True,
         num_orders=0,
-        profile_pic="https://media.istockphoto.com/id/1495088043/es/vector/icono-de-perfil-de-usuario-avatar-o-icono-de-persona-foto-de-perfil-s%C3%ADmbolo-de-retrato.jpg?s=612x612&w=0&k=20&c=mY3gnj2lU7khgLhV6dQBNqomEGj3ayWH-xtpYuCXrzk=",
+        profile_pic="https://goo.su/fn18CXL",
     ):
         self.__id = id
         self.__name = name
@@ -14,10 +13,6 @@ class Client:
         self.__active = active
         self.__num_orders = num_orders
         self.__profile_pic = profile_pic
-
-    @property
-    def id(self):
-        return self.__id
 
     @property
     def name(self):
@@ -60,4 +55,34 @@ class Client:
         self.__profile_pic = value
 
     def __str__(self):
-        return f"ID: {self.id}, Nombre: {self.name}, Email={self.email}"
+        return f"Nombre: {self.name}, Email={self.email}"
+
+    def _to_json(self):
+        return {
+            "name": self.name,
+            "email": self.email,
+            "active": self.active,
+            "num_orders": self.num_orders,
+            "profile_pic": self.profile_pic,
+        }
+
+
+class ClientDB(Client):
+    def __init__(
+        self,
+        id,
+        name,
+        email,
+        active=True,
+        num_orders=0,
+        profile_pic="https://goo.su/fn18CXL",
+    ):
+        super().__init__(name, email, active, num_orders, profile_pic)
+        self.__id = id
+
+    @property
+    def id(self):
+        return self.__id
+
+    def __str__(self):
+        return f"ID: {self.id}, {super().__str__()}"

@@ -1,7 +1,6 @@
 class Product:
     def __init__(
         self,
-        id: str,
         name: str,
         price: int | float,
         stock: int,
@@ -9,7 +8,6 @@ class Product:
         img_url: str = "",
     ):
         try:
-            self.__id = id
             self.__name = name
             self.__price = round(float(price), 2)
             self.__stock = int(stock)
@@ -19,10 +17,6 @@ class Product:
             raise ValueError(
                 f"Error al crear el producto: {e}. Asegúrate de que los valores sean correctos."
             )
-
-    @property
-    def id(self):
-        return self.__id
 
     @property
     def name(self):
@@ -65,4 +59,35 @@ class Product:
         self.__img_url = value
 
     def __str__(self):
-        return f"ID: {self.id} Nombre: {self.name}, Precio: {self.price}, Stock: {self.stock} Categoria: {self.__category}"
+        return f"Nombre: {self.name}, Precio: {self.price}, Stock: {self.stock} Categoria: {self.__category}"
+
+    def _to_json(self):
+        return {
+            "name": self.name,
+            "price": self.price,
+            "stock": self.stock,
+            "category": self.category,
+            "img_url": self.img_url,
+        }
+
+
+class ProductDB(Product):
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        price: int | float,
+        stock: int,
+        category: str,
+        img_url: str = "",
+    ):
+        super().__init__(name, price, stock, category, img_url)
+
+        self.__id = id
+
+    @property
+    def id(self):
+        return self.__id
+
+    def __str__(self):
+        return f"ID: {self.id}, {super().__str__()}"

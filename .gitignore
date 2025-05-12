@@ -1,26 +1,19 @@
-# Python cache files
-__pycache__/
+# Byte-compiled / optimized / DLL files
 **/__pycache__/
-*.py[cod]
-*$py.class
+.pytest_cache/
+*.pyc
+*.pyo
 
-# Virtual Environments
+# Sphinx documentation
+docs/_build/
+
+# Environments
 .env
+**/.venv
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
-
-# Distribution / packaging
-dist/
-build/
-*.egg-info/
-
-# Local configuration
-.local/
-.idea/
-.vscode/
-*.swp
-*.swo
+.vscode
