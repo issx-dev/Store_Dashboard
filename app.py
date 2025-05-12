@@ -12,6 +12,7 @@ from fake_data import (
 
 app = Flask(__name__)
 
+# MongoDB conection
 client = MongoClient(
     "mongodb+srv://ielm0509:KsaAw6tKMtHWoazc@pythonmongodb.ewz9ajb.mongodb.net/?retryWrites=true&w=majority&appName=PythonMongoDB"
 )
