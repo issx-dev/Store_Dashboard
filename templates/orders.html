@@ -32,21 +32,22 @@
             <div class="content-card orders_card">
                 <div class="content-header orders">
                         <summary>
-                            <h4><strong>ID Pedido: </strong>{{ ord["Order"].id }}</h4>
+                            <h4><strong>ID Pedido: </strong>{{ ord.id }}</h4>
                         </summary>
                         <details>
                             <ul>
                                 <li>
-                                    <strong> ID Cliente: </strong> {{ ord["Order"].client.id }}
+                                    <strong> ID Cliente: </strong> {{ ord.client.id }}
                                     <ul>
-                                        <li><strong>Nombre: </strong> {{ord["Order"].client.name}}</li>
-                                        <li><strong>Email: </strong> {{ord["Order"].client.email}}</li>
+                                        <li><strong>Nombre: </strong> {{ord.client.name}}</li>
+                                        <li><strong>Email: </strong> {{ord.client.email}}</li>
+                                        <br>
                                     </ul>
                                     <li>
                                         <strong>Productos:</strong>
                                         <br><br>
                                         <ol>
-                                            {% for prod in ord["Order"].products %}
+                                            {% for prod in ord.products %}
                                             <li>
                                                 <strong> ID Producto: </strong> {{ prod.id }}
                                                 <ul>
@@ -63,7 +64,7 @@
                         </details>
                         <br>
                         <li>
-                            <strong>Precio Total: </strong> {{ ord["Total"] }}€
+                            <strong>Precio Total: </strong> {{ ord.total_price }}€
                         </li>
                     </ul>
                 </div>
