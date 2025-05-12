@@ -141,7 +141,7 @@ a {
 
 .content-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     background-color: #999999;
     border-radius: 5px;
     padding: 1rem;
