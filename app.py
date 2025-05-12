@@ -1,6 +1,5 @@
-from flask import Flask, Response, render_template, request, redirect, g
+from flask import Flask, Response, render_template, request, redirect
 from models.Product import Product
-from pymongo import MongoClient
 
 from fake_data import (
     admin_data,
@@ -11,20 +10,6 @@ from fake_data import (
 )
 
 app = Flask(__name__)
-
-# MongoDB conection
-client = MongoClient(
-    "mongodb+srv://ielm0509:KsaAw6tKMtHWoazc@pythonmongodb.ewz9ajb.mongodb.net/?retryWrites=true&w=majority&appName=PythonMongoDB"
-)
-
-
-def get_db():
-    if "db" not in g:
-        g.db = client.PyMongoDB
-    return g.db
-
-users = [usr for usr in get_db().Users.find({})]
-print(users)
 
 
 @app.route("/")
