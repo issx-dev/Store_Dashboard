@@ -1,5 +1,5 @@
-from models.Product import Product
-from models.Client import Client
+from db.models.Product import Product
+from db.models.Client import Client
 from modules.utils import today_date
 
 

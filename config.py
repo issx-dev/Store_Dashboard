@@ -1,7 +1,7 @@
 # MODELS
-from models.Client import Client, ClientDB
-from models.Product import Product, ProductDB
-from models.Order import OrderDB
+from db.models.Client import Client, ClientDB
+from db.models.Product import Product, ProductDB
+from db.models.Order import OrderDB
 
 # LIBRARIES
 from decouple import config
@@ -12,7 +12,6 @@ DATABASE_NAME = config("DATABASE_NAME", cast=str)
 
 
 def get_db_data(mongo_conection):
-    global products_data, users_data, categories_data, orders_data
     # Database tables all data
     products_data = [
         ProductDB(*prod.values()) for prod in mongo_conection.Products.find({})

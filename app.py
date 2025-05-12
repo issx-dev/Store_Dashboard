@@ -1,22 +1,38 @@
 # MODELS
-from models.Product import Product, ProductDB
+from db.models.Product import Product, ProductDB
+from db.models.Client import ClientDB
+from db.models.Categorie import CategorieDB
+from db.models.Order import OrderDB
+from db.DataBase import DataBase
 
 # LIBRARIES
 from flask import Flask, Response, render_template, request, redirect
-from pymongo import MongoClient
 
 # MODULES
 from fake_data import admin_data
-from config import MONGO_CONECTION_URL, DATABASE_NAME, get_db_data
+from config import MONGO_CONECTION_URL, DATABASE_NAME
 
 # MAIN APP
 app = Flask(__name__)
 
-# MongoDB conection
-mongo_conection = MongoClient(MONGO_CONECTION_URL)[DATABASE_NAME]
-products_db = mongo_conection.Products
+if not MONGO_CONECTION_URL and DATABASE_NAME:
+    raise ValueError(
+        "Las variables de entorno deben de estar correctamente configuradas"
+    )
+else:
+    # MongoDB conection
+    mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
 
-products_data, users_data, categories_data, orders_data = get_db_data(mongo_conection)
+    products_db, users_db, categories_db, orders_db = mongo_conection.db_tables()
+    products_data, users_data, categories_data, orders_data = mongo_conection.db_data(
+        ProductDB, ClientDB, CategorieDB, OrderDB
+    )
+
+    prod_data = [ProductDB(**prod) for prod in [*products_data]]
+
+    for prod in prod_data:
+        print(prod)
+        input()
 
 
 @app.route("/")
@@ -32,7 +48,6 @@ def products():
 
 @app.route("/clients")
 def clients():
-    print(users_data)
     max_orders_client = max(users_data, key=lambda x: x.num_orders)
     users_data.sort(key=lambda x: x.num_orders, reverse=True)
     return render_template(
