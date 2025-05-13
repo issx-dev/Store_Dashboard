@@ -1,12 +1,14 @@
-# MODELS
-from db.models.Product import Product
+# DB MODELS
+from db.models.Product import Product, ProductDB
+from db.models.Client import ClientDB
+from db.models.Categorie import CategorieDB
+from db.models.Order import OrderDB
 from db.DataBase import DataBase
 
 # MODULES AND LIBRARIES
 from flask import Flask, Response, render_template, request, redirect
 from config import MONGO_CONECTION_URL, DATABASE_NAME
-from db.db_schemas import refresh_data
-from fake_data import admin_data
+from sample_data import admin_data
 
 # MAIN APP
 app = Flask(__name__)
@@ -14,10 +16,10 @@ app = Flask(__name__)
 
 # MongoDB conection
 mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
-products_db = mongo_conection.db_tables("Products")
+products_db = mongo_conection.db_tables("Products")[0]
 
 # VARIABLES
-products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
+products_data, users_data, categories_data, orders_data = mongo_conection.refresh_data()
 
 
 @app.route("/")
@@ -27,13 +29,13 @@ def home():
 
 @app.route("/products")
 def products():
-    products_data = refresh_data(mongo_conection, "Products")
+    products_data = mongo_conection.refresh_data([ProductDB], ["Products"])[0]
     return render_template("products.html", products=products_data)
 
 
 @app.route("/clients")
 def clients():
-    users_data = refresh_data(mongo_conection, "Users")
+    users_data = mongo_conection.refresh_data([ClientDB], ["Users"])[0]
     max_orders_client = max(users_data, key=lambda x: x.num_orders)
     users_data.sort(key=lambda x: x.num_orders, reverse=True)
     return render_template(
@@ -43,7 +45,7 @@ def clients():
 
 @app.route("/orders")
 def orders():
-    orders_data = refresh_data(mongo_conection, "Orders")
+    orders_data = mongo_conection.refresh_data([OrderDB], ["Orders"])[0]
     return render_template(
         "orders.html",
         orders=orders_data,
@@ -53,7 +55,9 @@ def orders():
 
 @app.route("/add_product", methods=["GET", "POST"])
 def add_product():
-    products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
+    products_data, categories_data = mongo_conection.refresh_data(
+        [ProductDB, CategorieDB], ["Products", "Categories"]
+    )
     if request.method == "POST":
         try:
             new_prod = Product(
@@ -63,14 +67,13 @@ def add_product():
                 request.form["category"],
                 request.form["img_url"],
             )
-            products_db.insert_one(new_prod._to_json())  # type: ignore
+            products_db.insert_one(new_prod._to_json())
 
         except ValueError as e:
             return Response(
                 f"Error al crear el producto: {e}. Asegúrate de que los valores sean correctos.",
                 status=400,
             )
-        products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
         return redirect("/add_product")
 
     return render_template(

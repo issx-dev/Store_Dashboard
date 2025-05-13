@@ -1,13 +1,13 @@
-from db.models.Product import Product
-from db.models.Client import Client
+from db.models.Product import ProductDB
+from db.models.Client import ClientDB
 from modules.utils import today_date
 
 
-class Order(Product, Client):
+class Order(ProductDB, ClientDB):
     def __init__(self, client: dict, products: list[dict], date: str = today_date):
-        self.__client = Client(**client)
-        self.__products = [Product(**p) for p in products]
-        self.__total_price = sum([Product(**prod).price for prod in products])
+        self.__client = ClientDB(**client)
+        self.__products = [ProductDB(**p) for p in products]
+        self.__total_price = sum([ProductDB(**prod).price for prod in products])
         self.__date = date
 
         self.__client.num_orders += 1
@@ -56,3 +56,6 @@ class OrderDB(Order):
 
     def __str__(self):
         return f"ID: {self.id}, {super().__str__()}"
+
+    def _to_json(self):
+        return {"_id": self.id, **super()._to_json()}

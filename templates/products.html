@@ -1,42 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Productos</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-    <header>
-        <h1>Lista de Productos</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/orders">Pedidos</a></li>
-            <li><a href="/clients">Clientes</a></li>
-            <li><a href="/products">Catálogo</a></li>
-            <li><a href="/add_product">Agregar Producto</a></li>
-        </ul>
-    </nav>
-    <main>
-        <div class="content-container products">
-            {% for prod in products %}
-            <div class="content-card">
-                <div class="content-header">
-                    <h3>{{ prod.name }}</h3>
-                    <p>Id: <strong>{{ prod.id }}</strong></p>
-                    <p>Precio: <strong>{{ prod.price }}€</strong></p>
-                    <p>Stock: <strong>{{ prod.stock if prod.stock else "Agotado"}}</strong></p>
-                    <p>Categoría: <strong>{{prod.category}}</strong></p>
+    <body>
+        <header>
+            <h1>Lista de Productos</h1>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/orders">Pedidos</a></li>
+                <li><a href="/clients">Clientes</a></li>
+                <li><a href="/products">Catálogo</a></li>
+                <li><a href="/add_product">Agregar Producto</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="content-container products">
+                {% for prod in products %}
+                <div class="content-card">
+                    <div class="content-header">
+                        <h3>{{ prod.name }}</h3>
+                        <p>Id: <strong>{{ prod.id }}</strong></p>
+                        <p>Precio: <strong>{{ prod.price }}€</strong></p>
+                        <p>
+                            Stock: {% if prod.stock %}
+                            <span class="active">{{prod.stock}}</span>
+                            {% else %}
+                            <span class="inactive">Agotado</span>
+                            {% endif %}
+                        </p>
+                        <p>Categoría: <strong>{{prod.category}}</strong></p>
+                    </div>
+                    <img
+                        src="{{ prod.img_url }}"
+                        alt="Imagen de {{ prod.name }}"
+                    />
                 </div>
-                <img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}">
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
-    </main>
-</body>
-
+        </main>
+    </body>
 </html>

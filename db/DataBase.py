@@ -1,5 +1,10 @@
 from pymongo import MongoClient
 
+from db.models.Categorie import CategorieDB
+from db.models.Client import ClientDB
+from db.models.Order import OrderDB
+from db.models.Product import ProductDB
+
 
 class DataBase:
     def __init__(self, conection_url: str, database_name: str) -> None:
@@ -32,9 +37,15 @@ class DataBase:
             ]
         )
 
-    def db_data(self, *classes, collections_name: list = []):
-        tables_data = []
-        for table, _class in zip(self.db_tables(*collections_name), classes):
-            tables_data.append([_class(**dat) for dat in [*table.find({})]])
+    def refresh_data(self, classes: list = [], collections: list = []):
+        def __get_data(_classes: list = [], _collections: list = []):
+            return [
+                [_class(**dat) for dat in [*table.find({})]]
+                for table, _class in zip(self.db_tables(*_collections), _classes)
+            ]
 
-        return tables_data
+        return (
+            __get_data(classes, collections)
+            if classes and collections
+            else __get_data([ProductDB, OrderDB, ClientDB, CategorieDB])
+        )

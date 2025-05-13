@@ -85,3 +85,6 @@ class ClientDB(Client):
 
     def __str__(self):
         return f"ID: {self.id}, {super().__str__()}"
+
+    def _to_json(self):
+        return {"_id": self.id, **super()._to_json()}
