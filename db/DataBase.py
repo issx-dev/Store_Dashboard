@@ -27,25 +27,22 @@ class DataBase:
     def db_manager(self, new_database_name):
         self.__db_manager = self.__conection[new_database_name]
 
-    def db_tables(self, *collections_name):
-        return (
-            [self.db_manager.get_collection(c) for c in collections_name]
-            if collections_name
-            else [
-                self.db_manager.get_collection(t)
-                for t in self.db_manager.list_collection_names()
-            ]
-        )
+    def db_tables(self, *collection_names):
+        if collection_names:
+            return [self.db_manager.get_collection(name) for name in collection_names]
+        return [
+            self.db_manager.get_collection(name)
+            for name in self.db_manager.list_collection_names()
+        ]
 
     def refresh_data(self, classes: list = [], collections: list = []):
-        def __get_data(_classes: list = [], _collections: list = []):
-            return [
-                [_class(**dat) for dat in [*table.find({})]]
-                for table, _class in zip(self.db_tables(*_collections), _classes)
-            ]
+        default_classes = [ProductDB, OrderDB, ClientDB, CategorieDB]
 
-        return (
-            __get_data(classes, collections)
-            if classes and collections
-            else __get_data([ProductDB, OrderDB, ClientDB, CategorieDB])
-        )
+        classes = classes or default_classes
+        collections = collections or []
+
+        tables = self.db_tables(*collections)
+        return {
+            name: [cls(**doc) for doc in table.find({})]
+            for name, table, cls in zip(collections, tables, classes)
+        }
