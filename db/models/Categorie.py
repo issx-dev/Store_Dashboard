@@ -1,6 +1,6 @@
 class Categorie:
-    def __init__(self, avaible_cats: list[str]) -> None:
-        self.__categories = avaible_cats
+    def __init__(self, Categories: list[str]) -> None:
+        self.__categories = Categories
 
     @property
     def categories(self):
@@ -11,8 +11,9 @@ class Categorie:
         self.__categories = value
 
 
-class CategorieDB:
-    def __init__(self, _id) -> None:
+class CategorieDB(Categorie):
+    def __init__(self, _id, Categories: list[str]) -> None:
+        super().__init__(Categories)
         self.__id = _id
 
     @property

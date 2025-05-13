@@ -4,13 +4,13 @@ from modules.utils import today_date
 
 
 class Order(Product, Client):
-    def __init__(self, client: Client, products: list[Product], date: str = today_date):
-        self.__client = client
-        self.__products = products
-        self.__total_price = sum([prod.price for prod in products])
+    def __init__(self, client: dict, products: list[dict], date: str = today_date):
+        self.__client = Client(**client)
+        self.__products = [Product(**p) for p in products]
+        self.__total_price = sum([Product(**prod).price for prod in products])
         self.__date = date
 
-        client.num_orders += 1
+        self.__client.num_orders += 1
 
     @property
     def client(self):
@@ -45,7 +45,7 @@ class Order(Product, Client):
 
 class OrderDB(Order):
     def __init__(
-        self, _id: str, client: Client, products: list[Product], date: str = today_date
+        self, _id: str, client: dict, products: list[dict], date: str = today_date
     ):
         super().__init__(client, products, date)
         self.__id = _id

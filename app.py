@@ -1,38 +1,23 @@
 # MODELS
-from db.models.Product import Product, ProductDB
-from db.models.Client import ClientDB
-from db.models.Categorie import CategorieDB
-from db.models.Order import OrderDB
+from db.models.Product import Product
 from db.DataBase import DataBase
 
-# LIBRARIES
+# MODULES AND LIBRARIES
 from flask import Flask, Response, render_template, request, redirect
-
-# MODULES
-from fake_data import admin_data
 from config import MONGO_CONECTION_URL, DATABASE_NAME
+from db.db_schemas import refresh_data
+from fake_data import admin_data
 
 # MAIN APP
 app = Flask(__name__)
 
-if not MONGO_CONECTION_URL and DATABASE_NAME:
-    raise ValueError(
-        "Las variables de entorno deben de estar correctamente configuradas"
-    )
-else:
-    # MongoDB conection
-    mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
 
-    products_db, users_db, categories_db, orders_db = mongo_conection.db_tables()
-    products_data, users_data, categories_data, orders_data = mongo_conection.db_data(
-        ProductDB, ClientDB, CategorieDB, OrderDB
-    )
+# MongoDB conection
+mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
+products_db = mongo_conection.db_tables("Products")
 
-    prod_data = [ProductDB(**prod) for prod in [*products_data]]
-
-    for prod in prod_data:
-        print(prod)
-        input()
+# VARIABLES
+products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
 
 
 @app.route("/")
@@ -42,12 +27,13 @@ def home():
 
 @app.route("/products")
 def products():
-    products_data = [ProductDB(*prod.values()) for prod in products_db.find({})]
+    products_data = refresh_data(mongo_conection, "Products")
     return render_template("products.html", products=products_data)
 
 
 @app.route("/clients")
 def clients():
+    users_data = refresh_data(mongo_conection, "Users")
     max_orders_client = max(users_data, key=lambda x: x.num_orders)
     users_data.sort(key=lambda x: x.num_orders, reverse=True)
     return render_template(
@@ -57,6 +43,7 @@ def clients():
 
 @app.route("/orders")
 def orders():
+    orders_data = refresh_data(mongo_conection, "Orders")
     return render_template(
         "orders.html",
         orders=orders_data,
@@ -66,6 +53,7 @@ def orders():
 
 @app.route("/add_product", methods=["GET", "POST"])
 def add_product():
+    products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
     if request.method == "POST":
         try:
             new_prod = Product(
@@ -75,18 +63,20 @@ def add_product():
                 request.form["category"],
                 request.form["img_url"],
             )
-            products_db.insert_one(new_prod._to_json())
+            products_db.insert_one(new_prod._to_json())  # type: ignore
 
         except ValueError as e:
             return Response(
                 f"Error al crear el producto: {e}. Asegúrate de que los valores sean correctos.",
                 status=400,
             )
-
+        products_data, users_data, categories_data, orders_data = refresh_data(mongo_conection)
         return redirect("/add_product")
 
     return render_template(
-        "add_product.html", products=products_data, categories=categories_data
+        "add_product.html",
+        products=products_data,
+        categories=categories_data[0].categories,
     )
 
 
