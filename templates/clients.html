@@ -14,11 +14,15 @@
     </header>
     <nav>
         <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/orders">Pedidos</a></li>
-            <li><a href="/clients">Clientes</a></li>
-            <li><a href="/products">Catálogo</a></li>
-            <li><a href="/add_product">Agregar Producto</a></li>
+            <li><a href="{{url_for('home')}}">Inicio</a></li>
+            <li><a href="{{url_for('orders')}}">Pedidos</a></li>
+            <li><a href="{{url_for('clients')}}">Clientes</a></li>
+            <li><a href="{{url_for('products')}}">Catálogo</a></li>
+            <li>
+                <a href="{{url_for('add_product')}}"
+                    >Agregar Producto</a
+                >
+            </li>
         </ul>
     </nav>
     <main>

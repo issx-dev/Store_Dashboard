@@ -52,7 +52,7 @@ def orders():
     )
 
 
-@app.route("/add_product", methods=["GET", "POST"])
+@app.route("/add-product", methods=["GET", "POST"])
 def add_product():
     data = mongo_conection.refresh_data(
         [ProductDB, CategorieDB], ["Products", "Categories"]

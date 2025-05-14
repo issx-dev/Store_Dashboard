@@ -14,11 +14,15 @@
     </header>
     <nav>
         <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/orders">Pedidos</a></li>
-            <li><a href="/clients">Clientes</a></li>
-            <li><a href="/products">Catálogo</a></li>
-            <li><a href="/add_product">Agregar Producto</a></li>
+            <li><a href="{{url_for('home')}}">Inicio</a></li>
+            <li><a href="{{url_for('orders')}}">Pedidos</a></li>
+            <li><a href="{{url_for('clients')}}">Clientes</a></li>
+            <li><a href="{{url_for('products')}}">Catálogo</a></li>
+            <li>
+                <a href="{{url_for('add_product')}}"
+                    >Agregar Producto</a
+                >
+            </li>
         </ul>
     </nav>
     <main>
@@ -31,36 +35,35 @@
             {% for ord in orders %}
             <div class="content-card orders_card">
                 <div class="content-header orders">
-                        <summary>
-                            <h4><strong>ID Pedido: </strong>{{ ord.id }}</h4>
-                        </summary>
+                    <summary>
+                        <h4><strong>ID Pedido: </strong>{{ ord.id }}</h4>
+                    </summary>
+                    <ul>
                         <details>
-                            <ul>
+                            <li>
+                                <strong> ID Cliente: </strong> {{ ord.client.id }}
+                                <ul>
+                                    <li><strong>Nombre: </strong> {{ord.client.name}}</li>
+                                    <li><strong>Email: </strong> {{ord.client.email}}</li>
+                                    <br>
+                                </ul>
                                 <li>
-                                    <strong> ID Cliente: </strong> {{ ord.client.id }}
-                                    <ul>
-                                        <li><strong>Nombre: </strong> {{ord.client.name}}</li>
-                                        <li><strong>Email: </strong> {{ord.client.email}}</li>
-                                        <br>
-                                    </ul>
-                                    <li>
-                                        <strong>Productos:</strong>
-                                        <br><br>
-                                        <ol>
-                                            {% for prod in ord.products %}
-                                            <li>
-                                                <strong> ID Producto: </strong> {{ prod.id }}
-                                                <ul>
-                                                    <li><strong>Nombre: </strong> {{prod.name}}</li>
-                                                    <li><strong>Precio: </strong> {{prod.price}}€</li>
-                                                </ul>
-                                                <br>
-                                            </li>
-                                            {% endfor %}
-                                        </ol>
-                                    </li>
+                                    <strong>Productos:</strong>
+                                    <br><br>
+                                    <ol>
+                                        {% for prod in ord.products %}
+                                        <li>
+                                            <strong> ID Producto: </strong> {{ prod.id }}
+                                            <ul>
+                                                <li><strong>Nombre: </strong> {{prod.name}}</li>
+                                                <li><strong>Precio: </strong> {{prod.price}}€</li>
+                                            </ul>
+                                            <br>
+                                        </li>
+                                        {% endfor %}
+                                    </ol>
                                 </li>
-                            </ul>
+                            </li>
                         </details>
                         <br>
                         <li>
