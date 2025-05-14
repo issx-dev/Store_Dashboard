@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <!--METADATA-->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="keywords" content="EJEMPLO DE KEYWORDS" />
+        <meta name="description" content="EJEMPLO DE DESCRIPCIÓN" />
+
+        <!--LINKS AND ICONS-->
+        <link
+            rel="stylesheet"
+            href="{{url_for('static', filename='style.css')}}"
+        />
+        <link rel="icon" href="./resources/images/icons/html_logo.png" />
+
+        {%block title%}
+        <title>Store Dashboard</title>
+        {%endblock%}
+    </head>
+    <body>
+        <header>
+            {%block header%}
+            <h1>Titulo de página</h1>
+            {%endblock%}
+            <nav>
+                <ul>
+                    <li><a href="{{url_for('home')}}">Inicio</a></li>
+                    <li><a href="{{url_for('orders')}}">Pedidos</a></li>
+                    <li><a href="{{url_for('clients')}}">Clientes</a></li>
+                    <li><a href="{{url_for('products')}}">Catálogo</a></li>
+                    <li>
+                        <a href="{{url_for('add_product')}}"
+                            >Agregar Producto</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            {%block content%}
+            <h2>Contenido de la página</h2>
+            {%endblock%}
+        </main>
+        <footer>
+            <p>
+                <small>
+                    <em>&copy; issa el mokadem</em>
+                </small>
+            </p>
+        </footer>
+    </body>
+</html>
