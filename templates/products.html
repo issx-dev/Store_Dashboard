@@ -1,5 +1,5 @@
-<!DOCTYPE html> {% extends "base.html" %} {%block title%} <title>Productos</title>  {%endblock%}
-{%block header%}
+<!DOCTYPE html> {% extends "base.html" %} {%block title%}
+<title>Productos</title> {%endblock%} {%block header%}
 <h1>Lista de productos</h1>
 {%endblock%} {% block content %}
 <div class="content-container products">
@@ -18,7 +18,9 @@
             </p>
             <p>Categoría: <strong>{{prod.category}}</strong></p>
         </div>
-        <img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}" />
+        <a href="{{ url_for('product', id=prod.id) }}"
+            ><img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}"
+        /></a>
     </div>
     {% endfor %}
 </div>

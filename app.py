@@ -30,6 +30,16 @@ def products():
     return render_template("products.html", products=data["Products"])
 
 
+@app.route("/product/<id>")
+def product(id):
+    data = mongo_conection.refresh_data([ProductDB], ["Products"])
+    for product in data["Products"]:
+        if str(product.id) == id:
+            return render_template("product.html", product=product)
+
+    return render_template("404.html", error="Product not found")
+
+
 @app.route("/clients")
 def clients():
     data = mongo_conection.refresh_data([ClientDB], ["Users"])

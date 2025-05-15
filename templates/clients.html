@@ -1,57 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-
-<body>
-    <header>
-        <h1>Lista de Clientes</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="{{url_for('home')}}">Inicio</a></li>
-            <li><a href="{{url_for('orders')}}">Pedidos</a></li>
-            <li><a href="{{url_for('clients')}}">Clientes</a></li>
-            <li><a href="{{url_for('products')}}">Catálogo</a></li>
-            <li>
-                <a href="{{url_for('add_product')}}"
-                    >Agregar Producto</a
-                >
-            </li>
-        </ul>
-    </nav>
-    <main>
-        <div class="content-container clients">
-            {% for cli in clients %}
-            <div class="content-card">
-                {% if cli.id == top_client.id %}
-                <div>
-                    <h2 class="best_client"> 🌟 CLIENTE ESTRELLA 🌟</h2>
-                </div>
-                {% endif %}
-                <div class="content-header">
-                    <h3>{{ cli.name }}</h3>
-                    <p>Id: <strong>{{ cli.id }}</strong></p>
-                    <p>Email: <strong>{{ cli.email }}</strong></p>
-                    <p>Estado:
-                        {% if cli.active %}
-                        <span class="active">ACTIVO</span>
-                        {% else %}
-                        <span class="inactive">INACTIVO</span>
-                        {% endif %}
-                    </p>
-                    <p>Nº de pedidos: <strong>{{ cli.num_orders}}</strong></p>
-                </div>
-                <img class="client_img" src="{{ cli.profile_pic }}" alt="Foto de perfil de {{ cli.profile_pic }}">
-            </div>
-            {% endfor %}
+{% extends "base.html" %} {% block title %}
+<title>Clientes</title>
+{% endblock %} {% block header %}
+<h1>Lista de clientes</h1>
+{% endblock %} {% block content %}
+<div class="content-container clients">
+    {% for cli in clients %}
+    <div class="content-card">
+        {% if cli.id == top_client.id %}
+        <div>
+            <h2 class="best_client">🌟 CLIENTE ESTRELLA 🌟</h2>
         </div>
-    </main>
-</body>
-
-</html>
+        {% endif %}
+        <div class="content-header">
+            <h3>{{ cli.name }}</h3>
+            <p>Id: <strong>{{ cli.id }}</strong></p>
+            <p>Email: <strong>{{ cli.email }}</strong></p>
+            <p>
+                Estado: {% if cli.active %}
+                <span class="active">ACTIVO</span>
+                {% else %}
+                <span class="inactive">INACTIVO</span>
+                {% endif %}
+            </p>
+            <p>Nº de pedidos: <strong>{{ cli.num_orders}}</strong></p>
+        </div>
+        <img
+            class="client_img"
+            src="{{ cli.profile_pic }}"
+            alt="Foto de perfil de {{ cli.profile_pic }}"
+        />
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

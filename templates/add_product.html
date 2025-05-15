@@ -1,105 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Add Product</title>
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}"
-        />
-    </head>
+{% extends "base.html" %} {% block title %}
+<title>Agregar Producto</title>
+{% endblock %} {% block header %}
+<h1>Agregar Producto</h1>
+{% endblock %} {% block content %}
+<div class="container">
+    <form action="/add_product" method="POST" class="product-form">
+        <fieldset>
+            <legend>Agregar un nuevo producto</legend>
 
-    <body>
-        <header>
-            <h1>Formulario para agregar nuevos productos</h1>
-        </header>
-        <nav>
-            <ul>
-                <li><a href="{{url_for('home')}}">Inicio</a></li>
-                <li><a href="{{url_for('orders')}}">Pedidos</a></li>
-                <li><a href="{{url_for('clients')}}">Clientes</a></li>
-                <li><a href="{{url_for('products')}}">Catálogo</a></li>
-                <li>
-                    <a href="{{url_for('add_product')}}"
-                        >Agregar Producto</a
-                    >
-                </li>
-            </ul>
-        </nav>
-        <div class="container">
-            <form action="/add_product" method="POST" class="product-form">
-                <fieldset>
-                    <legend>Agregar un nuevo producto</legend>
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    minlength="10"
+                    autofocus
+                    required
+                    placeholder=" "
+                />
+                <label for="name">Nombre del producto</label>
+            </div>
 
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            minlength="10"
-                            autofocus
-                            required
-                            placeholder=" "
-                        />
-                        <label for="name">Nombre del producto</label>
-                    </div>
+            <div class="form-group">
+                <input
+                    type="number"
+                    name="price"
+                    id="price"
+                    min="1"
+                    step="0.01"
+                    required
+                    placeholder=" "
+                />
+                <label for="price">Precio</label>
+            </div>
 
-                    <div class="form-group">
-                        <input
-                            type="number"
-                            name="price"
-                            id="price"
-                            min="1"
-                            step="0.01"
-                            required
-                            placeholder=" "
-                        />
-                        <label for="price">Precio</label>
-                    </div>
+            <div class="form-group">
+                <input
+                    type="number"
+                    name="stock"
+                    id="stock"
+                    min="0"
+                    required
+                    placeholder=" "
+                />
+                <label for="stock">Stock</label>
+            </div>
 
-                    <div class="form-group">
-                        <input
-                            type="number"
-                            name="stock"
-                            id="stock"
-                            min="0"
-                            required
-                            placeholder=" "
-                        />
-                        <label for="stock">Stock</label>
-                    </div>
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="img_url"
+                    id="img_url"
+                    placeholder=" "
+                />
+                <label for="img_url">Url de la imagen</label>
+            </div>
 
-                    <div class="form-group">
-                        <input
-                            type="text"
-                            name="img_url"
-                            id="img_url"
-                            placeholder=" "
-                        />
-                        <label for="img_url">Url de la imagen</label>
-                    </div>
+            <div class="cat">
+                <select name="category" id="category">
+                    <option value="" disabled selected>
+                        Selecciona una categoría
+                    </option>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-                    <div class="cat">
-                        <select name="category" id="category">
-                            <option value="" disabled selected>
-                                Selecciona una categoría
-                            </option>
-                            {% for category in categories %}
-                            <option value="{{ category }}">
-                                {{ category }}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="add_product_btn">
-                        <button type="submit" class="btn btn-primary">
-                            Añadir producto
-                        </button>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </body>
-</html>
+            <div class="add_product_btn">
+                <button type="submit" class="btn btn-primary">
+                    Añadir producto
+                </button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
