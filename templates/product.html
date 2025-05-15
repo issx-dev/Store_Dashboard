@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 {% extends "base.html" %} {% block title %}
-<title>Producto</title>
+<title>products</title>
 {% endblock %} {% block header %}
 <h1>Detalles del Producto</h1>
 {% endblock %} {% block content %}
-<div class="content-container">
-    <div class="content-card">
+<div class="product-container">
+    <div class="product-card">
         <div class="content-header">
-            <h3>{{ product.name }}</h3>
-            <p>Id: <strong>{{ product.id }}</strong></p>
-            <p>Precio: <strong>{{ product.price }}€</strong></p>
-            <p>Stock: <span class="active">{{ product.stock }}</span></p>
-            <p>Categoría: <strong>{{ product.category }}</strong></p>
+            <h3>{{ prod.name }}</h3>
+            <p>Id: <strong>{{ prod.id }}</strong></p>
+            <p>Precio: <strong>{{ prod.price }}€</strong></p>
+            <p>
+                Stock: {% if prod.stock %}
+                <span class="active">{{prod.stock}}</span>
+                {% else %}
+                <span class="inactive">Agotado</span>
+                {% endif %}
+            </p>
+            <p>Categoría: <strong>{{prod.category}}</strong></p>
         </div>
-        <img src="{{ product.img_url }}" alt="Imagen de {{ product.name }}" />
+        <img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}" />
     </div>
 </div>
 <a href="{{ url_for('home') }}" class="btn btn-primary">Volver al inicio</a>
+<a href="{{ url_for('del_product', id=prod.id) }}" class="btn btn-delete"
+    >Eliminar producto</a
+>
 {%endblock%}

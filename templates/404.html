@@ -6,7 +6,7 @@
 {% endblock %} {% block content %}
 <div class="error-container">
     {%if error_msg%}
-    <p>{{ error_msg }}</p>
+    <h2>ERROR {{ error_msg }}</h2>
     {% else %}
     <h2>Ocurrió un error inesperado.</h2>
     {% endif %}

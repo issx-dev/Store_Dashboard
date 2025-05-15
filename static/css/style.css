@@ -1,5 +1,6 @@
 body {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     background-color: #a4a5a7;
     text-align: center;
 }
@@ -41,7 +42,6 @@ legend {
     text-align: center;
 }
 
-
 .form-group,
 .cat {
     position: relative;
@@ -73,10 +73,10 @@ legend {
 }
 
 /* Efecto de flotación */
-.form-group input:focus+label,
-.form-group input:not(:placeholder-shown)+label,
-.form-group textarea:focus+label,
-.form-group textarea:not(:placeholder-shown)+label {
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label,
+.form-group textarea:focus + label,
+.form-group textarea:not(:placeholder-shown) + label {
     top: -20px;
     left: 10px;
     font-size: 0.9rem;
@@ -134,10 +134,13 @@ textarea:not(:placeholder-shown) {
     background-color: #218838;
 }
 
+.btn-delete {
+    background-color: rgb(143, 5, 5);
+}
+
 a {
     text-decoration: none;
 }
-
 
 .content-container {
     display: grid;
@@ -154,7 +157,7 @@ a {
     justify-content: center;
     align-items: center;
     box-shadow: 2px 4px 6px rgb(82, 82, 82);
-    background-color: #fff;
+    background-color: #dbdbcfda;
     border-radius: 5px;
     padding: 10px;
     flex-wrap: wrap;
@@ -162,8 +165,10 @@ a {
 
 .content-card img {
     width: 150px;
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
 }
-.content-header{
+.content-header {
     margin-left: 1.2rem;
     margin-right: 1.2rem;
 }
@@ -207,24 +212,45 @@ nav ul li a:hover {
     color: red;
 }
 
-.clients{
+.clients {
     text-align: left;
 }
 
 .clients img {
-    width: 4rem;
+    max-width: 8rem;
+    min-width: 8rem;
     border-radius: 50%;
 }
-
+.clients .content-header {
+    min-width: 60%;
+}
+.clients .content-card {
+    background-color: #dbdbcfda;
+}
+.clients .content-card h3:first-child {
+    text-align: center;
+}
 .clients .content-card:first-child {
-    background-color: #d1d09e;
-    grid-column: 1 / -1; 
+    grid-column: 1 / -1;
     display: grid;
     text-align: center;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-
-.orders{
+.clients .content-card:first-child:has(.best_client) {
+    background-color: #d1d09e;
+}
+.client img {
+    max-width: fit-content;
+    width: 15vw;
+}
+.client .content-card:first-child {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+.orders {
     text-align: left;
 }
 
@@ -232,8 +258,41 @@ nav ul li a:hover {
     min-width: calc(100% - 20px);
 }
 
-.orders_card{
+.orders_card {
     display: flex;
     flex-wrap: wrap;
     background-color: #498dec59;
+}
+
+.product-container {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background-color: #999999;
+    border-radius: 5px;
+    padding: 1rem;
+    gap: 10px;
+    margin: 1rem;
+}
+
+.product-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 4px 6px rgb(82, 82, 82);
+    background-color: #d1d09e4b;
+    border-radius: 5px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+.product-card h3 {
+    max-width: 30ch;
+}
+
+.product-card img {
+    max-width: 50vh;
+    filter: brightness(1.1);
+    mix-blend-mode: multiply;
 }
