@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% extends "base.html" %} {% block title %}
+<title>Success</title>
+{% endblock %} {% block header %}
+<h1>Detalles de la operacion</h1>
+{% endblock %} {% block content %}
+<div class="success-container">
+    {%if msg%}
+    <h2>ÉXITO: {{ msg }}</h2>
+    {% else %}
+    <h2>La operación se ha realizado correctamente.</h2>
+    {% endif %}
+    <a href="{{ url_for('home') }}" class="btn btn-primary">Volver al inicio</a>
+</div>
+{% endblock %}

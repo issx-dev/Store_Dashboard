@@ -14,6 +14,7 @@ from sample_data import admin_data
 # MAIN APP
 app = Flask(__name__)
 
+
 # MongoDB conection
 mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
 products_db = mongo_conection.db_tables("Products")[0]
@@ -22,15 +23,16 @@ users_db = mongo_conection.db_tables("Users")[0]
 
 @app.route("/")
 def home():
-    return render_template("index.html", **admin_data)
+    data = mongo_conection.refresh_data([ProductDB], ["Products"])["Products"]
+    return render_template("index.html", **admin_data, products=data)
 
 
 # PRODUCTS CRUD
 # All products page
 @app.route("/products")
 def products():
-    data = mongo_conection.refresh_data([ProductDB], ["Products"])
-    return render_template("products.html", products=data["Products"])
+    data = mongo_conection.refresh_data([ProductDB], ["Products"])["Products"]
+    return render_template("products.html", products=data)
 
 
 # Get product info by id
@@ -78,7 +80,7 @@ def add_product():
                 f"Error al crear el producto: {e}. Asegúrate de que los valores sean correctos.",
                 status=400,
             )
-        return redirect(url_for("add_product"))
+        return render_template("200_OK.html", msg="Producto creado correctamente")
 
     return render_template(
         "add_product.html",
@@ -139,7 +141,7 @@ def add_client():
                 f"Error al crear el usuario: {e}. Asegúrate de que los valores sean correctos.",
                 status=400,
             )
-        return redirect(url_for("add_client"))
+        return render_template("200_OK.html", msg="Usuario creado correctamente")
 
     return render_template("add_user.html")
 

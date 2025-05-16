@@ -2,26 +2,5 @@
 <title>Productos</title> {%endblock%} {%block header%}
 <h1>Lista de productos</h1>
 {%endblock%} {% block content %}
-<div class="content-container products">
-    {% for prod in products %}
-    <div class="content-card">
-        <div class="content-header">
-            <h3>{{ prod.name }}</h3>
-            <p>Id: <strong>{{ prod.id }}</strong></p>
-            <p>Precio: <strong>{{ prod.price }}€</strong></p>
-            <p>
-                Stock: {% if prod.stock %}
-                <span class="active">{{prod.stock}}</span>
-                {% else %}
-                <span class="inactive">Agotado</span>
-                {% endif %}
-            </p>
-            <p>Categoría: <strong>{{prod.category}}</strong></p>
-        </div>
-        <a href="{{ url_for('product', id=prod.id) }}"
-            ><img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}"
-        /></a>
-    </div>
-    {% endfor %}
-</div>
+{% include "partials/products_snippet.html" %}
 {%endblock%}

@@ -1,0 +1,47 @@
+<div class="orders-container">
+    <div class="total-earnings-card">
+        <h2>Total Generado: <span>{{ total_earnings }}€</span></h2>
+    </div>
+
+    {% for ord in orders %}
+    <div class="order-card">
+        <div class="order-header">
+            <h3>ID Pedido: {{ ord.id }}</h3>
+            <p><strong>Precio Total:</strong> {{ ord.total_price }}€</p>
+        </div>
+
+        <div class="client-info">
+            <img
+                src="{{ ord.client.profile_pic }}"
+                alt="Foto de {{ ord.client.name }}"
+                class="client-img"
+            />
+            <div>
+                <p><strong>Nombre:</strong> {{ ord.client.name }}</p>
+                <p><strong>Email:</strong> {{ ord.client.email }}</p>
+                <p><strong>ID Cliente:</strong> {{ ord.client.id }}</p>
+            </div>
+        </div>
+
+        <details class="ord-product-list">
+            <summary>Ver Productos ({{ ord.products|length }})</summary>
+            <div class="ord-products-grid">
+                {% for prod in ord.products %}
+                <div class="ord-product-card">
+                    <img
+                        src="{{ prod.img_url }}"
+                        alt="{{ prod.name }}"
+                        class="ord-product-img"
+                    />
+                    <div class="ord-product-info">
+                        <p><strong>Nombre:</strong> {{ prod.name }}</p>
+                        <p><strong>Precio:</strong> {{ prod.price }}€</p>
+                        <p><strong>ID:</strong> {{ prod.id }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </details>
+    </div>
+    {% endfor %}
+</div>

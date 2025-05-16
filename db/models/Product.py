@@ -30,6 +30,10 @@ class Product:
     def price(self):
         return self.__price
 
+    @property
+    def formated_price(self):
+        return f"{self.__price:.2f} €"
+
     @price.setter
     def price(self, value):
         self.__price = value

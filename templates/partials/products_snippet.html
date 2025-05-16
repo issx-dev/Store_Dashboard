@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-{% extends "base.html" %} {% block title %}
-<title>products</title>
-{% endblock %} {% block header %}
-<h1>Detalles del Producto</h1>
-{% endblock %} {% block content %}
-
-<div class="product-container">
-    <div class="product-card">
+<!-- templates/products_snippet.html -->
+<div class="content-container products">
+    {% for prod in products %}
+    <div class="content-card">
         <div class="content-header">
             <h3>{{ prod.name }}</h3>
             <p>Id: <strong>{{ prod.id }}</strong></p>
@@ -20,11 +15,9 @@
             </p>
             <p>Categoría: <strong>{{prod.category}}</strong></p>
         </div>
-        <img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}" />
+        <a href="{{ url_for('product', id=prod.id) }}">
+            <img src="{{ prod.img_url }}" alt="Imagen de {{ prod.name }}" />
+        </a>
     </div>
+    {% endfor %}
 </div>
-<a href="{{ url_for('home') }}" class="btn btn-primary">Volver al inicio</a>
-<a href="{{ url_for('del_product', id=prod.id) }}" class="btn btn-delete"
-    >Eliminar producto</a
->
-{%endblock%}
