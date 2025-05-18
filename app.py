@@ -6,7 +6,7 @@ from db.models.Order import OrderDB
 from db.DataBase import DataBase
 
 # MODULES AND LIBRARIES
-from flask import Flask, Response, render_template, request, redirect, url_for
+from flask import Flask, Response, render_template, request
 from config import MONGO_CONECTION_URL, DATABASE_NAME
 from sample_data import admin_data
 
@@ -21,10 +21,32 @@ products_db = mongo_conection.db_tables("Products")[0]
 users_db = mongo_conection.db_tables("Users")[0]
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("500.html", error_msg=error), 500
+
+
 @app.route("/")
 def home():
-    data = mongo_conection.refresh_data([ProductDB], ["Products"])["Products"]
-    return render_template("index.html", **admin_data, products=data)
+    data = mongo_conection.refresh_data(
+        [ProductDB, ClientDB, OrderDB], ["Products", "Users", "Orders"]
+    )
+    max_orders_client = max(data["Users"], key=lambda x: x.num_orders)
+    data["Users"].sort(key=lambda x: x.num_orders, reverse=True)
+    return render_template(
+        "index.html",
+        **admin_data,
+        products=data["Products"][:3],
+        clients=data["Users"][:3],
+        orders=data["Orders"][:3],
+        top_client=max_orders_client,
+        total_earnings=sum(order.total_price for order in data["Orders"]),
+    )
 
 
 # PRODUCTS CRUD
@@ -54,7 +76,9 @@ def del_product(id):
         if str(product.id) == id:
             try:
                 products_db.delete_one({"_id": product.id})
-                return redirect(url_for("home"))
+                return render_template(
+                    "200_OK.html", msg="Producto eliminado correctamente"
+                )
             except Exception as e:
                 return render_template("404.html", error_msg=e)
 
@@ -121,7 +145,9 @@ def del_client(id):
         if str(client.id) == id:
             try:
                 users_db.delete_one({"_id": client.id})
-                return redirect(url_for("home"))
+                return render_template(
+                    "200_OK.html", msg="Cliente eliminado correctamente"
+                )
             except Exception as e:
                 return render_template("404.html", error_msg=e)
 

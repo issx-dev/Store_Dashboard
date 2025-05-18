@@ -4,35 +4,5 @@
 {% endblock %} {% block header %}
 <h1>Lista de clientes</h1>
 {% endblock %} {% block content %}
-<div class="content-container clients">
-    {% for cli in clients %}
-    <div class="content-card">
-        {% if cli.id == top_client.id %}
-        <div>
-            <h2 class="best_client">🌟 CLIENTE ESTRELLA 🌟</h2>
-        </div>
-        {% endif %}
-        <div class="content-header">
-            <h3>{{ cli.name }}</h3>
-            <p>Id: <strong>{{ cli.id }}</strong></p>
-            <p>Email: <strong>{{ cli.email }}</strong></p>
-            <p>
-                Estado: {% if cli.active %}
-                <span class="active">ACTIVO</span>
-                {% else %}
-                <span class="inactive">INACTIVO</span>
-                {% endif %}
-            </p>
-            <p>Nº de pedidos: <strong>{{ cli.num_orders}}</strong></p>
-        </div>
-        <a href="{{url_for('client', id=cli.id)}}">
-            <img
-                class="client_img"
-                src="{{ cli.profile_pic }}"
-                alt="Foto de perfil de {{ cli.profile_pic }}"
-            />
-        </a>
-    </div>
-    {% endfor %}
-</div>
+{% include "partials/clients_snippet.html" %}
 {% endblock %}

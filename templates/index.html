@@ -4,6 +4,23 @@
 {% endblock %} {% block header%}
 <h1>Bienvenido al Dashboard de {{tienda}}</h1>
 {%endblock%} {% block content %}
-<h1>Productos Añadidos Recientemente</h1>
+<div class="amind_data">
+    <p>Bienvenido {{admin}}, Tienda: {{tienda}}, Fecha: {{fecha}}</p>
+</div>
 
-{% include "partials/products_snippet.html" %} {%endblock%}
+<div class="recents_grid">
+    <div class="recent-orders">
+        <h1>Últimos pedidos realizados</h1>
+        {% include "partials/orders_snippet.html" %}
+    </div>
+    <div class="recent">
+        <h1>Productos Añadidos Recientemente</h1>
+        {% include "partials/products_snippet.html" %}
+    </div>
+    <div class="recent">
+        <h1>Clientes Añadidos Recientemente</h1>
+        {% include "partials/clients_snippet.html" %}
+    </div>
+</div>
+
+{%endblock%}

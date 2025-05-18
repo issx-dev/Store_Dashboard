@@ -5,10 +5,9 @@
 <h1>¡Vaya! Algo salió mal.</h1>
 {% endblock %} {% block content %}
 <div class="error-container">
+    <h2>Ha ocurrido un error inesperado.</h2>
     {%if error_msg%}
-    <h2>ERROR {{ error_msg }}</h2>
-    {% else %}
-    <h2>Página no encontrada.</h2>
+    <p>Detalles del error: {{error_msg}}</p>
     {% endif %}
     <p>Por favor, inténtalo de nuevo más tarde.</p>
     <a href="{{ url_for('home') }}" class="btn btn-primary">Volver al inicio</a>
