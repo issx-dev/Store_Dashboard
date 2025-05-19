@@ -4,7 +4,7 @@ A Flask-based web application for managing a store's inventory, customers, and o
 
 ## 📋 Overview
 
-Store Dashboard is built with Flask and provides a clean, easy-to-use interface for managing various aspects of a retail store. The application currently uses fake data for demonstration purposes but can be extended to connect with a database for production use.
+Store Dashboard is built with Flask and provides a clean, easy-to-use interface for managing various aspects of a retail store. The application uses MongoDB for data storage and retrieval, providing a complete solution ready for production use.
 
 ## ✨ Features
 
@@ -13,38 +13,57 @@ Store Dashboard is built with Flask and provides a clean, easy-to-use interface 
   - Add new products with form validation
   - Products categorized by type (Laptops, Smartphones, etc.)
   - Visual representation with product images
+  - CRUD operations with MongoDB storage
 
 - **Client Management**
   - View all clients and their information
   - Track client order history
   - Identify top clients based on order count
+  - CRUD operations with MongoDB storage
 
 - **Order Management**
   - View all orders with details
   - See which products are included in each order
   - Track order details by client
+  - Persistent storage in MongoDB
+
+- **Database Integration**
+  - MongoDB integration for all data storage
+  - Efficient data retrieval and management
+  - Proper data models with validation
 
 ## 🏗️ Project Structure
 
 ```
 Store_Dashboard/
 ├── app.py                  # Main application file with route definitions
-├── fake_data.py            # Sample data for demonstration purposes
+├── config.py               # Configuration and environment variable handling
+├── sample_data.py          # Sample data for demonstration purposes
 ├── requirements.txt        # Project dependencies
-├── models/                 # Data models
-│   ├── Client.py           # Client model definition
-│   ├── Order.py            # Order model definition
-│   └── Product.py          # Product model definition
+├── .env                    # Environment variables (not in repository)
+├── db/                     # Database related files
+│   ├── DataBase.py         # MongoDB connection and management
+│   └── models/             # Data models
+│       ├── Categorie.py    # Category model definition
+│       ├── Client.py       # Client model definition
+│       ├── Order.py        # Order model definition
+│       └── Product.py      # Product model definition
 ├── modules/                # Utility modules
 │   └── utils.py            # Helper functions (e.g., date formatting)
 ├── routers/                # Route handlers (for larger applications)
 ├── static/                 # Static files (CSS, JS, images)
 ├── templates/              # HTML templates
 │   ├── add_product.html    # Form for adding new products
+│   ├── add_user.html       # Form for adding new clients
+│   ├── client.html         # Client details page
 │   ├── clients.html        # Client listing and details
 │   ├── index.html          # Dashboard home page
 │   ├── orders.html         # Order listing and details
-│   └── products.html       # Product listing and details
+│   ├── product.html        # Product details page
+│   ├── products.html       # Product listing and details
+│   ├── 200_OK.html         # Success response page
+│   ├── 404.html            # Not found error page
+│   └── 500.html            # Server error page
 └── README.md               # Project documentation
 ```
 
@@ -76,6 +95,14 @@ Store_Dashboard/
    pip install -r requirements.txt
    ```
 
+5. Set up environment variables:
+   Create a `.env` file in the root directory with the following variables:
+   ```
+   MONGO_CONECTION_URL=mongodb://localhost:27017
+   DATABASE_NAME=store_dashboard
+   ```
+   Adjust the MongoDB connection URL and database name according to your setup.
+
 ## 🖥️ Usage
 
 1. Run the application:
@@ -106,11 +133,5 @@ Store_Dashboard/
 
 - Flask 3.1.0 - Web framework
 - Jinja2 3.1.6 - Templating engine
-
-## 🛠️ Development
-
-The application currently uses in-memory fake data. For a production environment, consider:
-
-1. Implementing a database connection (SQLite, PostgreSQL, etc.)
-2. Adding user authentication
-3. Implementing CRUD operations for all entities
+- pymongo 3.12 - MongoDB driver for Python
+- python-decouple - Environment variable management

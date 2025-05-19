@@ -226,27 +226,32 @@ nav ul li a:hover {
 .clients .content-header {
     min-width: 60%;
 }
-.clients .content-card {
-    background-color: #dbdbcfda;
-}
-.clients .content-card h3:first-child {
+.clients .content-card h3 {
     text-align: center;
 }
+.clients .content-card {
+    background-color: #dbdbcfda;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .clients .content-card:first-child {
     grid-column: 1 / -1;
     display: grid;
-    text-align: center;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-.clients .content-card:first-child:has(.best_client) {
+    justify-items: center;
     background-color: #d1d09e;
 }
+
 .client img {
     max-width: fit-content;
     width: 15vw;
 }
 .client .content-card:first-child {
     display: flex;
+    flex-direction: row;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -289,8 +294,7 @@ nav ul li a:hover {
     padding: 20px;
     flex-wrap: wrap;
 }
-.product-card h3,
-.content-card h3 {
+.product-card h3 {
     max-width: 35ch;
 }
 
@@ -316,7 +320,8 @@ nav ul li a:hover {
     color: #333;
 }
 
-.total-earnings-card {
+.total-earnings-card,
+.total-card {
     background: rgba(255, 255, 255, 0.568);
     padding: 1rem 2rem;
     border-radius: 12px;
@@ -324,9 +329,17 @@ nav ul li a:hover {
     text-align: center;
 }
 
-.total-earnings-card span {
+.total-earnings-card span,
+.total-card span {
     font-weight: bold;
     color: #1d72b8;
+}
+
+.total-card {
+    margin-left: 1.5vw;
+    margin-right: 1.5vw;
+    padding: 0.3rem;
+    background: rgba(221, 204, 188, 0.568);
 }
 
 .order-card {
@@ -348,7 +361,8 @@ nav ul li a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50rem;
+    flex-wrap: wrap;
+    gap: 20vw;
     text-align: left;
     padding: 2rem;
     border-radius: 10px;
@@ -420,4 +434,16 @@ nav ul li a:hover {
 
 .recent-orders {
     position: relative;
+}
+
+.admin_data {
+    font-weight: bold;
+    font-size:larger;
+    margin: 0 auto;
+    max-width: fit-content;
+    text-align: left;
+}
+
+.admin_data span {
+    color: rgb(15, 44, 63);
 }

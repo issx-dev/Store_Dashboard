@@ -4,8 +4,11 @@
 {% endblock %} {% block header%}
 <h1>Bienvenido al Dashboard de {{tienda}}</h1>
 {%endblock%} {% block content %}
-<div class="amind_data">
-    <p>Bienvenido {{admin}}, Tienda: {{tienda}}, Fecha: {{fecha}}</p>
+<div class="admin_data">
+    <p>
+        Administrador: <span>{{admin}}</span>, Tienda: <span>{{tienda}}</span>,
+        Fecha: <span>{{fecha}}</span>
+    </p>
 </div>
 
 <div class="recents_grid">
