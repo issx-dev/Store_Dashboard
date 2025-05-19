@@ -3,11 +3,10 @@ from db.models.Product import Product, ProductDB
 from db.models.Client import Client, ClientDB
 from db.models.Categorie import CategorieDB
 from db.models.Order import OrderDB
-from db.DataBase import DataBase
+from db.DataBase import mongo_conection
 
 # MODULES AND LIBRARIES
 from flask import Flask, Response, render_template, request
-from config import MONGO_CONECTION_URL, DATABASE_NAME
 from sample_data import admin_data
 
 
@@ -15,8 +14,6 @@ from sample_data import admin_data
 app = Flask(__name__)
 
 
-# MongoDB conection
-mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))
 products_db = mongo_conection.db_tables("Products")[0]
 users_db = mongo_conection.db_tables("Users")[0]
 
@@ -36,16 +33,16 @@ def home():
     data = mongo_conection.refresh_data(
         [ProductDB, ClientDB, OrderDB], ["Products", "Users", "Orders"]
     )
-    max_orders_client = max(data["Users"], key=lambda x: x.num_orders)
     data["Users"].sort(key=lambda x: x.num_orders, reverse=True)
     return render_template(
         "index.html",
         **admin_data,
-        products=data["Products"][:3],
-        clients=data["Users"][:3],
-        orders=data["Orders"][:3],
-        top_client=max_orders_client,
+        products=data["Products"][::-1][:3],
+        clients=data["Users"][::-1][:3],
+        orders=data["Orders"][::-1][:3],
         total_earnings=sum(order.total_price for order in data["Orders"]),
+        total_stock=sum(product.stock for product in data["Products"]),
+        num_active_clients=len([client for client in data["Users"] if client.active]),
     )
 
 
@@ -54,7 +51,8 @@ def home():
 @app.route("/products")
 def products():
     data = mongo_conection.refresh_data([ProductDB], ["Products"])["Products"]
-    return render_template("products.html", products=data)
+    total_stock = sum(product.stock for product in data)
+    return render_template("products.html", products=data, total_stock=total_stock)
 
 
 # Get product info by id
@@ -120,8 +118,12 @@ def clients():
     users_data = mongo_conection.refresh_data([ClientDB], ["Users"])["Users"]
     max_orders_client = max(users_data, key=lambda x: x.num_orders)
     users_data.sort(key=lambda x: x.num_orders, reverse=True)
+    num_active_clients = len([client for client in users_data if client.active])
     return render_template(
-        "clients.html", clients=users_data, top_client=max_orders_client
+        "clients.html",
+        clients=users_data,
+        top_client=max_orders_client,
+        num_active_clients=num_active_clients,
     )
 
 

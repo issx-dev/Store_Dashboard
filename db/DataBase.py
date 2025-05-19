@@ -1,8 +1,8 @@
 from pymongo import MongoClient
+from config import MONGO_CONECTION_URL, DATABASE_NAME
 
 from db.models.Categorie import CategorieDB
 from db.models.Client import ClientDB
-from db.models.Order import OrderDB
 from db.models.Product import ProductDB
 
 
@@ -36,6 +36,8 @@ class DataBase:
         ]
 
     def refresh_data(self, classes: list = [], collections: list = []):
+        # Import OrderDB here to avoid circular imports
+        from db.models.Order import OrderDB
         default_classes = [ProductDB, OrderDB, ClientDB, CategorieDB]
 
         classes = classes or default_classes
@@ -46,3 +48,6 @@ class DataBase:
             name: [cls(**doc) for doc in table.find({})]
             for name, table, cls in zip(collections, tables, classes)
         }
+
+
+mongo_conection = DataBase(str(MONGO_CONECTION_URL), str(DATABASE_NAME))

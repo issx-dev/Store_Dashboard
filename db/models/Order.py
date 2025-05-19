@@ -11,6 +11,11 @@ class Order(ProductDB, ClientDB):
         self.__date = date
 
         self.__client.num_orders += 1
+        # Import here to avoid circular imports
+        from db.DataBase import mongo_conection
+        mongo_conection.db_tables("Users")[0].update_one(
+            {"_id": self.client.id}, {"$set": {"num_orders": self.client.num_orders}}
+        )
 
     @property
     def client(self):
